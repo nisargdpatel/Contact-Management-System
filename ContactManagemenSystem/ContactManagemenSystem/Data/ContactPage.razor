@@ -3,7 +3,7 @@
 @inject ContactService contactService
 
 Navigate to Add Contact Component when Add New Contact link is clicked
-<NavLink class="nav-link" href="AddContact">
+<NavLink class="nav-link" href="NewContact">
     <span class="oi oi-plus" aria-hidden="true"></span>Add New Contact
 </NavLink>
 
@@ -14,8 +14,8 @@ Navigate to Add Contact Component when Add New Contact link is clicked
 }
 else
 {
-    <table class="table">
-        <thead>
+    <table class="table" style="background-color:lightgray">
+        <thead style="text-align: center; margin:auto">
             <tr>
                 <th>Contact Id</th>
                 <th>First Name</th>
@@ -25,21 +25,23 @@ else
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center; margin:auto">
             @foreach (var contact in contacts)
             {
                 <tr>
-                    <td>@contact.Id</td>
-                    <td>@contact.FirstName</td>
-                    <td>@contact.LastName</td>
-                    <td>@contact.PhoneNumber</td>
-                    <td>@contact.BirthDate</td>
-                    <td>
+                    <td style="vertical-align: middle">@contact.Id</td>
+                    <td style="vertical-align: middle">@contact.FirstName</td>
+                    <td style="vertical-align: middle">@contact.LastName</td>
+                    <td style="vertical-align: middle">@contact.PhoneNumber</td>
+                    <td style="vertical-align: middle">@contact.BirthDate</td>
+                    <td style="vertical-align: middle">
                         <a class="nav-link" href="EditContact/@contact.Id">
-                            <span class="oi oi-pencil" aria-hidden="true"></span>Edit
+                            <p class="oi oi-pencil" aria-hidden="true"></p>Edit
                         </a>
+                    </td>
+                    <td style="vertical-align: middle">
                         <a class="nav-link" @onclick="@(() => confirmDelete(contact))">
-                            <span class="oi oi-trash" aria-hidden="true"></span>Delete
+                            <p class="oi oi-trash" aria-hidden="true"></p>Delete
                         </a>
                     </td>
                 </tr>

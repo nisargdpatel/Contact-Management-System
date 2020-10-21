@@ -90,3 +90,5 @@ C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\C
 C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\ContactManagemenSystem.genruntimeconfig.cache
 C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\RazorDeclaration\Data\ContactPage.razor.g.cs
 C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\Razor\Data\ContactPage.razor.g.cs
+C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\RazorDeclaration\Data\NewContactPage.razor.g.cs
+C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\Razor\Data\NewContactPage.razor.g.cs
