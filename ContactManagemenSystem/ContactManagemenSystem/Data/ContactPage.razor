@@ -40,7 +40,7 @@ else
                         </a>
                     </td>
                     <td style="vertical-align: middle">
-                        <a class="nav-link" @onclick="@(() => confirmDelete(contact))">
+                        <a class="nav-link" href="DeleteContact/@contact.Id">
                             <p class="oi oi-trash" aria-hidden="true"></p>Delete
                         </a>
                     </td>
@@ -56,10 +56,5 @@ else
     protected override async Task OnInitializedAsync()
     {
         contacts = await Task.Run(() => contactService.getContact());
-    }
-
-    public void confirmDelete(Contact tempcontact)
-    {
-
     }
 }
