@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ContactManagemenSystem.Data;
 using Microsoft.EntityFrameworkCore;
+using Blazored.Modal;
 
 namespace ContactManagemenSystem
 {
@@ -32,6 +33,8 @@ namespace ContactManagemenSystem
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<ContactService>();
             services.AddDbContext<ContactDatabase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddBlazoredModal();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

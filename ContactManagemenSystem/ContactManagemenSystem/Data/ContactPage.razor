@@ -1,6 +1,7 @@
 ﻿@page "/contactPage"
 @using ContactManagemenSystem.Data
 @inject ContactService contactService
+@*@inject IModalService modal*@
 
 Navigate to Add Contact Component when Add New Contact link is clicked
 <NavLink class="nav-link" href="NewContact">
@@ -42,6 +43,7 @@ else
                     <td style="vertical-align: middle">
                         <a class="nav-link" @onclick="@(() => confirmDelete(contact))">
                             <p class="oi oi-trash" aria-hidden="true"></p>Delete
+                            <ConfirmDelete contact="contact"></ConfirmDelete>
                         </a>
                     </td>
                 </tr>
@@ -50,16 +52,21 @@ else
     </table>
 }
 
+
+
 @code {
     List<Contact> contacts;
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         contacts = await Task.Run(() => contactService.getContact());
     }
 
-    public void confirmDelete(Contact tempcontact)
+    public void confirmDelete(Contact tempContact)
     {
-
+        var parameteres = new ModalParameters();
+        parameteres.Add("Confirm Delete", tempContact);
+        Modal.Show<ConfirmDelete>("Confirm Delete", parameteres);
     }
 }
