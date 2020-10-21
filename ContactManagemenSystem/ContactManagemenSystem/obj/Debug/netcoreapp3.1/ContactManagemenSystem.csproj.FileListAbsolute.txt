@@ -94,3 +94,5 @@ C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\C
 C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\Razor\Data\NewContactPage.razor.g.cs
 C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\RazorDeclaration\Data\UpdateContactPage.razor.g.cs
 C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\Razor\Data\UpdateContactPage.razor.g.cs
+C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\RazorDeclaration\Data\DeleteContact.razor.g.cs
+C:\Users\nisar\BlazorProjects\Contact-Management-System\ContactManagemenSystem\ContactManagemenSystem\obj\Debug\netcoreapp3.1\Razor\Data\DeleteContact.razor.g.cs
