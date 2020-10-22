@@ -29,7 +29,6 @@ namespace ContactManagemenSystem
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddScoped<ContactService>();
             services.AddDbContext<ContactDatabase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }

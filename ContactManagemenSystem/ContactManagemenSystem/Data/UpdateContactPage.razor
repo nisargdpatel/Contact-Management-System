@@ -61,7 +61,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <input type="button" class="btn btn-primary" @onclick="updateContact" value="Update Contact" />
-                <input type="button" class="btn btn-primary" @onclick="nevermind" value="Nevermind" />
+                <input type="button" class="btn btn-primary" @onclick="cancel" value="Cancel" />
             </div>
         </div>
     </div>
@@ -94,7 +94,7 @@
         }
 
     }
-    void nevermind()
+    void cancel()
     {
         navigationManager.NavigateTo("ContactPage");
     }

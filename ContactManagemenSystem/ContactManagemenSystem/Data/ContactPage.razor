@@ -3,15 +3,17 @@
 @inject ContactService contactService
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
-Navigate to Add Contact Component when Add New Contact link is clicked
+
+@*Navigate to New Contact Component when Add New Contact link is clicked*@
 <NavLink class="nav-link" href="NewContact">
-    <span class="oi oi-plus" aria-hidden="true"></span>Add New Contact
+    <h5 class="oi oi-plus" aria-hidden="true">Add New Contact</h5>
 </NavLink>
 
-<h1>All Contacts</h1>
+
 @if (contacts == null)
 {
-    <div class="spinner"></div>
+    <hr />
+    <h4>Loading...</h4>
 }
 else
 {
@@ -23,7 +25,8 @@ else
                 <th><a href="contactPage" @onclick="sortLastName">Last Name</a></th>
                 <th>Phone Number</th>
                 <th>Birth Date</th>
-                <th>Actions</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody style="text-align: center; margin:auto">
@@ -33,16 +36,16 @@ else
                     <td style="vertical-align: middle">@contact.Id</td>
                     <td style="vertical-align: middle">@contact.FirstName</td>
                     <td style="vertical-align: middle">@contact.LastName</td>
-                    <td style="vertical-align: middle">@contact.PhoneNumber</td>
-                    <td style="vertical-align: middle">@contact.BirthDate</td>
+                    <td style="vertical-align: middle">@formatPhone(@contact.PhoneNumber)</td>
+                    <td style="vertical-align: middle">@contact.BirthDate.Month / @contact.BirthDate.Day / @contact.BirthDate.Year</td>
                     <td style="vertical-align: middle">
                         <a class="nav-link" href="EditContact/@contact.Id">
-                            <p class="oi oi-pencil" aria-hidden="true"></p>Edit
+                            <p class="oi oi-pencil" aria-hidden="true"></p>
                         </a>
                     </td>
                     <td style="vertical-align: middle">
                         <a class="nav-link" @onclick="(()=>Delete(contact))" href="">
-                            <p class="oi oi-trash" aria-hidden="true"></p>Delete
+                            <p class="oi oi-trash" aria-hidden="true"></p>
                         </a>
                     </td>
                 </tr>
@@ -85,5 +88,11 @@ else
     public void sortFirstName()
     {
         contacts = contacts.OrderBy(c => c.FirstName).ToList();
+    }
+
+    public string formatPhone(string phoneNum)
+    {
+        string phoneFormat = "(###) - ### - ####";
+        return Convert.ToInt64(phoneNum).ToString(phoneFormat);
     }
 }
