@@ -1,0 +1,109 @@
+﻿@page "/EditContact/{currId}"
+@using ContactManagemenSystem.Data
+@inject ContactService contactService
+@inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+<h2>Update Contact</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="FirstName" class="control-label">First Name</label>
+                <input form="FirstName" class="form-control" @bind="@contact.FirstName" />
+                @if (contact.FirstName == null || contact.FirstName.Length == 0)
+                {
+                    <p class="alert-danger">First name cannot be empty!</p>
+                }
+                @if (contact.FirstName != null && contact.FirstName.Length > 250)
+                {
+                    <p class="alert-danger">First name must be less than 250 characters long.</p>
+                }
+
+            </div>
+            <div class="form-group">
+                <label for="LastName" class="control-label">Last Name</label>
+                <input form="LastName" class="form-control" @bind="@contact.LastName" />
+                @if (contact.LastName == null || contact.LastName.Length == 0)
+                {
+                    <p class="alert-danger">Last name cannot be empty!</p>
+                }
+                @if (contact.LastName != null && contact.LastName.Length > 250)
+                {
+                    <p class="alert-danger">Last name must be less than 250 characters long.</p>
+                }
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="control-label">Phone Number</label>
+                <input form="PhoneNumber" class="form-control" @bind="@contact.PhoneNumber" />
+                @if (contact.PhoneNumber == null || contact.PhoneNumber.Length == 0)
+                {
+                    <p class="alert-danger">Phone number cannot be empty!</p>
+                }
+                @if (contact.PhoneNumber != null && contact.PhoneNumber.Length != 10)
+                {
+                    <p class="alert-danger">Phone number must be 10 digits long!</p>
+                }
+                @if (contact.PhoneNumber != null && contact.PhoneNumber != null && !Double.TryParse(contact.PhoneNumber, out _))
+                {
+                    <p class="alert-danger">Phone number must be all numeric!</p>
+                }
+            </div>
+            <div class="form-group">
+                <label for="BirthDate" class="control-label">Birth Date</label>
+                <input type="date" form="BirthDate" class="form-control" @bind="@contact.BirthDate" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="updateContact" value="Update Contact" />
+                <input type="button" class="btn btn-primary" @onclick="nevermind" value="Nevermind" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    [Parameter]
+    public string currId { get; set; }
+
+    Contact contact = new Contact();
+
+    protected override async Task OnInitializedAsync()
+    {
+        contact = await Task.Run(() => contactService.getContact(Convert.ToInt32(currId)));
+    }
+
+    protected void updateContact()
+    {
+        if (contact.FirstName == null || contact.FirstName.Length == 0 || (contact.FirstName != null && contact.FirstName.Length > 250) ||
+            contact.LastName == null || contact.LastName.Length == 0 || (contact.LastName != null && contact.LastName.Length > 250) ||
+            contact.PhoneNumber == null || contact.PhoneNumber.Length == 0 || (contact.PhoneNumber != null && contact.PhoneNumber.Length != 10) ||
+            !Double.TryParse(contact.PhoneNumber, out _))
+        {
+            alert();
+        }
+        else
+        {
+            contactService.updateContact(contact);
+            navigationManager.NavigateTo("ContactPage");
+        }
+
+    }
+    void nevermind()
+    {
+        navigationManager.NavigateTo("ContactPage");
+    }
+
+    async Task alert()
+    {
+        if (!await JSRuntime.InvokeAsync<bool>("confirm", $"One ore more fields invalid. Please try again"))
+        {
+            return;
+        }
+    }
+}

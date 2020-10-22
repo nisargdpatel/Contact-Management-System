@@ -1,0 +1,89 @@
+﻿@page "/contactPage"
+@using ContactManagemenSystem.Data
+@inject ContactService contactService
+@inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+Navigate to Add Contact Component when Add New Contact link is clicked
+<NavLink class="nav-link" href="NewContact">
+    <span class="oi oi-plus" aria-hidden="true"></span>Add New Contact
+</NavLink>
+
+<h1>All Contacts</h1>
+@if (contacts == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <table class="table" style="background-color:lightgray">
+        <thead style="text-align: center; margin:auto">
+            <tr>
+                <th>Contact Id</th>
+                <th><a href="contactPage" @onclick="sortFirstName">First Name</a></th>
+                <th><a href="contactPage" @onclick="sortLastName">Last Name</a></th>
+                <th>Phone Number</th>
+                <th>Birth Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center; margin:auto">
+            @foreach (var contact in contacts)
+            {
+                <tr>
+                    <td style="vertical-align: middle">@contact.Id</td>
+                    <td style="vertical-align: middle">@contact.FirstName</td>
+                    <td style="vertical-align: middle">@contact.LastName</td>
+                    <td style="vertical-align: middle">@contact.PhoneNumber</td>
+                    <td style="vertical-align: middle">@contact.BirthDate</td>
+                    <td style="vertical-align: middle">
+                        <a class="nav-link" href="EditContact/@contact.Id">
+                            <p class="oi oi-pencil" aria-hidden="true"></p>Edit
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle">
+                        <a class="nav-link" @onclick="(()=>Delete(contact))" href="">
+                            <p class="oi oi-trash" aria-hidden="true"></p>Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Contact> contacts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        contacts = await Task.Run(() => contactService.getContact());
+    }
+
+
+
+    async Task Delete(Contact contact)
+    {
+        if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the contact '{contact.FirstName}'?"))
+        {
+            navigationManager.NavigateTo("contactPage");
+            //return;
+        } else
+        {
+            contactService.DeleteContact(contact);
+            navigationManager.NavigateTo("contactPage");
+        }
+
+
+
+    }
+
+    public void sortLastName()
+    {
+        contacts = contacts.OrderBy(c => c.LastName).ToList();
+    }
+
+    public void sortFirstName()
+    {
+        contacts = contacts.OrderBy(c => c.FirstName).ToList();
+    }
+}
