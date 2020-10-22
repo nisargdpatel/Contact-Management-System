@@ -19,8 +19,8 @@ else
         <thead style="text-align: center; margin:auto">
             <tr>
                 <th>Contact Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th><a href="contactPage" @onclick="sortFirstName">First Name</a></th>
+                <th><a href="contactPage" @onclick="sortLastName">Last Name</a></th>
                 <th>Phone Number</th>
                 <th>Birth Date</th>
                 <th>Actions</th>
@@ -75,5 +75,15 @@ else
 
 
 
+    }
+
+    public void sortLastName()
+    {
+        contacts = contacts.OrderBy(c => c.LastName).ToList();
+    }
+
+    public void sortFirstName()
+    {
+        contacts = contacts.OrderBy(c => c.FirstName).ToList();
     }
 }
