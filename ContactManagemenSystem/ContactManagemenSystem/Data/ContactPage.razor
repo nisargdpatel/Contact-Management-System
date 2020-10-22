@@ -3,7 +3,6 @@
 @inject ContactService contactService
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
-
 @*Navigate to New Contact Component when Add New Contact link is clicked*@
 <NavLink class="nav-link" href="NewContact">
     <h5 class="oi oi-plus" aria-hidden="true">Add New Contact</h5>
@@ -55,22 +54,24 @@ else
 }
 
 @code {
-    List<Contact> contacts;
+    List<Contact> contacts;     //List of contacts
 
+    //Retrieves contacts from database.
     protected override async Task OnInitializedAsync()
     {
         contacts = await Task.Run(() => contactService.getContact());
     }
 
 
-
+    //Confirms contact deletion and if confirmed, calls method to delete a specific contact from database
     async Task Delete(Contact contact)
     {
         if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the contact '{contact.FirstName}'?"))
         {
             navigationManager.NavigateTo("contactPage");
             //return;
-        } else
+        }
+        else
         {
             contactService.DeleteContact(contact);
             navigationManager.NavigateTo("contactPage");
@@ -80,16 +81,22 @@ else
 
     }
 
+    //Precondition: An existing list of contacts
+    //Postcondition: Returns a sorted list of contacts according to last name
     public void sortLastName()
     {
         contacts = contacts.OrderBy(c => c.LastName).ToList();
     }
 
+    //Precondition: An existing list of contacts
+    //Postcondition: Returns a sorted list of contacts according to first name
     public void sortFirstName()
     {
         contacts = contacts.OrderBy(c => c.FirstName).ToList();
     }
 
+    //Preconditon: A given phone number string in the format of "##########"
+    //Postcondition: Returns a converted phone number string in the format of "(###) - ### - ####"
     public string formatPhone(string phoneNum)
     {
         string phoneFormat = "(###) - ### - ####";

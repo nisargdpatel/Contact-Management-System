@@ -12,6 +12,8 @@
             <div class="form-group">
                 <label for="FirstName" class="control-label">First Name</label>
                 <input form="FirstName" class="form-control" @bind="@contact.FirstName" />
+
+                @*First Name Validations*@
                 @if (contact.FirstName == null || contact.FirstName.Length == 0)
                 {
                     <p class="alert-danger">First name cannot be empty!</p>
@@ -24,6 +26,8 @@
             <div class="form-group">
                 <label for="LastName" class="control-label">Last Name</label>
                 <input form="LastName" class="form-control" @bind="@contact.LastName" />
+
+                @*Last Name Validations*@
                 @if (contact.LastName == null || contact.LastName.Length == 0)
                 {
                     <p class="alert-danger">Last name cannot be empty!</p>
@@ -36,6 +40,8 @@
             <div class="form-group">
                 <label for="PhoneNumber" class="control-label">Phone Number</label>
                 <input form="PhoneNumber" class="form-control" @bind="@contact.PhoneNumber" />
+
+                @*Phone Number Validations*@
                 @if (contact.PhoneNumber == null || contact.PhoneNumber.Length == 0)
                 {
                     <p class="alert-danger">Phone number cannot be empty!</p>
@@ -68,8 +74,10 @@
 
 @code {
 
-    Contact contact = new Contact();
+    Contact contact = new Contact();    //Contact object
 
+    //Precondition: Add Contact button is clicked. A valid contact object exists.
+    //Postcondition: Checks for validations. If invalid, shows a pop up error message. Else, calls a method to add new contact
     protected void createContact()
     {
         if (contact.FirstName == null || contact.FirstName.Length == 0 || (contact.FirstName != null && contact.FirstName.Length > 250) ||
@@ -85,11 +93,14 @@
         }
 
     }
+
+
     void cancel()
     {
         navigationManager.NavigateTo("ContactPage");
     }
 
+    //asyncronous method to display a pop up dialog box to show error message.
     async Task alert()
     {
         if (!await JSRuntime.InvokeAsync<bool>("confirm", $"One ore more fields invalid. Please try again"))
